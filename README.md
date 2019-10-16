@@ -33,8 +33,7 @@ Try sending a test webhook event from the Stripe Dashboard and it will be added 
 
 # EventBus configuration
 
-Now, if you create rules in CloudWatch Events that match the pattern below, you can now route these webhooks to endpoints of your
-choice (such as Lambdas) while being assured that the events have already had their signatures checked.
+Now, if you create rules in CloudWatch Events that match the pattern below, you can now route these events to endpoints of your choice (such as Lambdas) while being assured that the events have already had their signatures checked.
 ```
 {
   "source": [
