@@ -9,6 +9,7 @@ and if so, then the event is pushed onto AWS EventBridge for downstream applicat
 
 ## What gets deployed
 
+![Architecture overview](https://raw.githubusercontent.com/rangle/stripe-eventbridge/master/img/stripe-eventbridge.png)
 
 ## Setup
 
