@@ -1,0 +1,16 @@
+{
+  "name": "stripe-eventbridge",
+  "version": "1.0.0",
+  "description": "##  Intro",
+  "main": "eventbridge.js",
+  "dependencies": {
+    "aws-sdk": "^2.548.0",
+    "stripe": "^7.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

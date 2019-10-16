@@ -1,0 +1,43 @@
+
+service: stripe-eventbridge
+frameworkVersion: ">=1.54.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  memorySize: 256
+
+  stage: dev
+  region: us-east-1
+  endpointType: EDGE
+  logs:                # Enable CloudWatch logs
+    restApi: true
+  tracing:             # Enable X-Ray tracing
+    apiGateway: true
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "secretsmanager:GetSecretValue"
+      Resource: "${cf:stripe-eventbridge-deps-${self:provider.stage}.StripeWebhookSecretArn}"
+    - Effect: "Allow"
+      Action:
+        - "sns:Publish"
+      Resource: ${cf:stripe-eventbridge-deps-${self:provider.stage}.SNSTargetForFailedEvents}
+    - Effect: "Allow"
+      Action:
+        - "events:PutEvents"
+      Resource: "default"
+
+
+functions:
+  stripe-webhook:
+    handler: handler.stripeWebhook
+    events:
+      - http:
+          path: stripe/webhook
+          method: post
+          async: false
+    environment:
+      FAILURE_SNS: ${cf:stripe-eventbridge-deps-${self:provider.stage}.SNSTargetForFailedEvents}
+      EVENT_BRIDGE: default

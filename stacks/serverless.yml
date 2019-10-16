@@ -1,0 +1,31 @@
+
+service: stripe-eventbridge-deps
+frameworkVersion: ">=1.54.0 <2.0.0"
+
+provider:
+  name: aws
+  stage: dev
+  region: us-east-1
+
+resources:
+  Resources:
+
+    NotifyStripeWebhookEventFailedToValidate:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: stripe-webhook-event-failed-to-validate
+        TopicName: stripe-event-failed-to-validate
+
+    StripeWebhookSecret:
+      Type: AWS::SecretsManager::Secret
+      Properties:
+        Description: This is the signing secret that is used to validate that incoming webhook events are from Stripe
+        Name: ${file(./config.yml):stripe-webhook-secret}
+
+  Outputs:
+    SNSTargetForFailedEvents:
+      Value:
+        Ref: NotifyStripeWebhookEventFailedToValidate
+    StripeWebhookSecretArn:
+      Value:
+        Ref: StripeWebhookSecret

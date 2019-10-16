@@ -1,0 +1,2 @@
+---
+stripe-webhook-secret: ${self:provider.stage}/stripe/stripe-webhook-secret
