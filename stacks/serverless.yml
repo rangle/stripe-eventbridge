@@ -20,7 +20,7 @@ resources:
       Type: AWS::SecretsManager::Secret
       Properties:
         Description: This is the signing secret that is used to validate that incoming webhook events are from Stripe
-        Name: ${file(./config.yml):stripe-webhook-secret}
+        Name: ${file(./config.yml):stripe-webhook-endpoint-secret}
 
   Outputs:
     SNSTargetForFailedEvents:
@@ -29,3 +29,4 @@ resources:
     StripeWebhookSecretArn:
       Value:
         Ref: StripeWebhookSecret
+    

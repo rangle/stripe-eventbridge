@@ -4,7 +4,7 @@ const stripe = require('stripe'),
       sns = require('./lib/sns'),
       AWS = require('aws-sdk'),
       { promisify } = require('util'),
-      secretName = "stripe-webhook-secret"
+      secretName = process.env.ENDPOINT_SECRET
 
 var client = new AWS.SecretsManager()
 client.fetchSecret = promisify(client.getSecretValue)
@@ -15,8 +15,7 @@ module.exports.stripeWebhook = async event => {
   try 
   {
     const signature = event.headers["Stripe-Signature"]
-    const secretObj = (await client.fetchSecret({ SecretId: secretName })).SecretString
-    const secret = JSON.parse(secretObj)['stripe-webhook-secret']
+    const secret = (await client.fetchSecret({ SecretId: secretName })).SecretString
     const eventReceived = stripe.webhooks.constructEvent(event.body, signature, secret)
     await eventbridge.sendToEventBridge(process.env.EVENT_BRIDGE, eventReceived)
   } 
