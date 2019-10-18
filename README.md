@@ -31,13 +31,35 @@ That's it!
 Try sending a test webhook event from the Stripe Dashboard and it will be added to the AWS EventBridge.
 
 
-# EventBus configuration
+# EventBridge configuration
 
-Now, if you create rules in CloudWatch Events that match the pattern below, you can now route these events to endpoints of your choice (such as Lambdas) while being assured that the events have already had their signatures checked.
+Now, if you create rules in CloudWatch Events that match the pattern below, you can now route these events based on the event type to endpoints of your choice (such as Lambdas) while being assured that the events have already had their signatures checked.
+
+For example, to select all of the payment_intent.succeeded events, you would use this pattern:
 ```
 {
+  "detail-type": [
+    "payment_intent.succeeded"
+  ],
   "source": [
     "Stripe"
   ]
 }
+```
+
+Note: If you're using the Serverless Framework to create Lambdas to handle the above events, then the YAML syntax to
+have EventBridge trigger on the above would be:
+
+```
+functions:
+  myLambdaFunction:
+    handler: handler.myLambdaFunction
+    events:
+      - eventBridge:
+          pattern:
+            source:
+              - Stripe
+            detail-type:
+              - payment_intent.succeeded
+
 ```
