@@ -5,7 +5,7 @@
   "main": "eventbridge.js",
   "dependencies": {
     "aws-sdk": "^2.548.0",
-    "stripe": "^7.10.0"
+    "stripe": "^7.15.0"
   },
   "devDependencies": {},
   "scripts": {
