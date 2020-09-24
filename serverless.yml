@@ -40,4 +40,4 @@ functions:
     environment:
       FAILURE_SNS: ${cf:stripe-eventbridge-deps-${self:provider.stage}.SNSTargetForFailedEvents}
       EVENT_BRIDGE: "default"
-      ENDPOINT_SECRET: "${cf:stripe-eventbridge-deps-${self:provider.stage}.StripeWebhookSecretArn.Name}"
+      ENDPOINT_SECRET: "${cf:stripe-eventbridge-deps-${self:provider.stage}.StripeWebhookSecretArn}"
