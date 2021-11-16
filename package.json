@@ -4,7 +4,7 @@
   "description": "##  Intro",
   "main": "eventbridge.js",
   "dependencies": {
-    "aws-sdk": "^2.548.0",
+    "aws-sdk": "^2.814.0",
     "stripe": "^7.10.0"
   },
   "devDependencies": {},
